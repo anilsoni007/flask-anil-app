@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App - User Input and Background Color</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: {{ background_color }};
+        }
+        .container {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .healthy {
+            color: green;
+        }
+        .unhealthy {
+            color: red;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flask App - User Input and Background Color</h1>
+        <p><strong>Hostname:</strong> {{ hostname }}</p>
+        <p><strong>Memory Usage:</strong> {{ memory_percentage }}%</p>
+        <p><strong>App Health:</strong> 
+            <span class="{{ 'healthy' if health_status == 'Healthy' else 'unhealthy' }}">
+                {{ health_status }}
+            </span>
+        </p>
+        <hr>
+        <h2>Enter Your Details</h2>
+        <form method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="contact">Contact No:</label>
+            <input type="text" id="contact" name="contact" required>
+            <button type="submit">Submit</button>
+        </form>
+        <hr>
+        <h2>Change Background Color</h2>
+        <form method="post">
+            <label for="color">Select a color:</label>
+            <select id="color" name="color">
+                <option value="white" {% if background_color == 'white' %}selected{% endif %}>White</option>
+                <option value="lightblue" {% if background_color == 'lightblue' %}selected{% endif %}>Light Blue</option>
+                <option value="lightgreen" {% if background_color == 'lightgreen' %}selected{% endif %}>Light Green</option>
+                <option value="lightyellow" {% if background_color == 'lightyellow' %}selected{% endif %}>Light Yellow</option>
+                <option value="lightcoral" {% if background_color == 'lightcoral' %}selected{% endif %}>Light Coral</option>
+            </select>
+            <button type="submit">Change Color</button>
+        </form>
+        <hr>
+        <h2>User Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact No</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.contact }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
